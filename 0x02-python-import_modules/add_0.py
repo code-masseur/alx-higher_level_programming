@@ -1,6 +1,4 @@
-if __name__ == "__main__":
-    from add_0 import add
-
+#!/usr/bin/python3
 def add(a, b):
     return (a + b)
 
