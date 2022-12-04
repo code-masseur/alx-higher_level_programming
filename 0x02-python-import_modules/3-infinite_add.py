@@ -7,4 +7,4 @@ if __name__ == "__main__":
     for args in sys.argv:
         if args != sys.argv[0]:
             outcome += int(args)
-    print(outcome) 
+    print(outcome)
