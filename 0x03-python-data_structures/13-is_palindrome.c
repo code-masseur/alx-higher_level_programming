@@ -1,219 +1,74 @@
+#include <stdlib.h>
 #include "lists.h"
 
-
-
 /**
-
- * reverse - reverses the second half of the list
-
- *
-
- * @h_r: head of the second half
-
- * Return: no return
-
+ * list_len - computes the length of the liked list..
+ * @h: a pointer to the list to iterato to.
+ * Return: the number of nodes
  */
-
-void reverse(listint_t **h_r)
-
+size_t list_len(const listint_t *h)
 {
+	const listint_t *tmp;
 
-	listint_t *prv;
+	size_t i = 0;
 
-	listint_t *crr;
+	tmp = h;
 
-	listint_t *nxt;
+	if (tmp)
+		tmp = h;
 
-
-
-	prv = NULL;
-
-	crr = *h_r;
-
-
-
-	while (crr != NULL)
-
+	while (tmp)
 	{
-
-		nxt = crr->next;
-
-		crr->next = prv;
-
-		prv = crr;
-
-		crr = nxt;
-
+		i++;
+		tmp = tmp->next;
 	}
-
-
-
-	*h_r = prv;
-
+	return (i);
 }
 
-
-
 /**
-
- * compare - compares each int of the list
-
- *
-
- * @h1: head of the first half
-
- * @h2: head of the second half
-
- * Return: 1 if are equals, 0 if not
-
+ * _chunk_ispal - Tests if a part of a list is palindrome.
+ * @l: The list
+ * @start: The start
+ * @end: The end
+ * Return: 1 if the substring s[start..end] is palindrome.
+ *	   0 otherwise.
  */
-
-int compare(listint_t *h1, listint_t *h2)
-
+int _chunk_ispal(listint_t **l, int start, int end)
 {
-
-	listint_t *tmp1;
-
-	listint_t *tmp2;
-
-
-
-	tmp1 = h1;
-
-	tmp2 = h2;
-
-
-
-	while (tmp1 != NULL && tmp2 != NULL)
-
-	{
-
-		if (tmp1->n == tmp2->n)
-
-		{
-
-			tmp1 = tmp1->next;
-
-			tmp2 = tmp2->next;
-
-		}
-
-		else
-
-		{
-
-			return (0);
-
-		}
-
-	}
-
-
-
-	if (tmp1 == NULL && tmp2 == NULL)
-
-	{
-
+	if (start == end)
 		return (1);
-
-	}
-
-
-
-	return (0);
-
+	if (l[start]->n != l[end]->n)
+		return (0);
+	if (start < end + 1)
+		return (_chunk_ispal(l, start + 1, end - 1));
+	return (1);
 }
 
-
-
 /**
-
- * is_palindrome - checks if a singly linked list
-
- * is a palindrome
-
- * @head: pointer to head of list
-
- * Return: 0 if it is not a palindrome,
-
- * 1 if it is a palndrome
-
+ * is_palindrome - checks if a singly linked list is a palindrome
+ * @head: The head of the list
+ * Return: 1 if the list is a palindrome. 0 otherwise.
  */
-
 int is_palindrome(listint_t **head)
-
 {
+	int res = 1, i = 0, n;
 
-	listint_t *slow, *fast, *prev_slow;
+	listint_t **array_of_list;
+	listint_t *tmp;
 
-	listint_t *scn_half, *middle;
-
-	int isp;
-
-
-
-	slow = fast = prev_slow = *head;
-
-	middle = NULL;
-
-	isp = 1;
-
-
-
-	if (*head != NULL && (*head)->next != NULL)
-
+	if (head && *head)
 	{
+		n = list_len(*head);
+		array_of_list = malloc(n * sizeof(listint_t *));
+		tmp = *head;
 
-		while (fast != NULL && fast->next != NULL)
-
+		while (tmp)
 		{
-
-			fast = fast->next->next;
-
-			prev_slow = slow;
-
-			slow = slow->next;
-
+			array_of_list[i++] = tmp;
+			tmp = tmp->next;
 		}
-
-
-
-		if (fast != NULL)
-
-		{
-
-			middle = slow;
-
-			slow = slow->next;
-
-		}
-
-
-
-		scn_half = slow;
-
-		prev_slow->next = NULL;
-
-		reverse(&scn_half);
-
-		isp = compare(*head, scn_half);
-
-
-
-		if (middle != NULL)
-
-		{
-
-			prev_slow->next = middle;
-
-			middle->next = scn_half;
-		}
-		else
-		{
-
-			prev_slow->next = scn_half;
-		}
-
+		res = _chunk_ispal(array_of_list, 0, n - 1);
+		free(array_of_list);
 	}
-	return (isp);
+		return (res);
 }
