@@ -3,6 +3,7 @@
 update_dictionary = __import__('7-update_dictionary').update_dictionary
 print_sorted_dictionary = __import__('6-print_sorted_dictionary').print_sorted_dictionary
 simple_delete = __import__('8-simple_delete').simple_delete
+multiply_by_2 = __import__('9-multiply_by_2').multiply_by_2
 
 a_dictionary = { 'language': "C", 'number': 89, 'track': "Low level" }
 new_dict = update_dictionary(a_dictionary, 'language', "Python")
