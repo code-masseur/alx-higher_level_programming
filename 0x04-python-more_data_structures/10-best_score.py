@@ -10,7 +10,7 @@ def best_score(a_dictionary):
                 score = a_dictionary[key]
                 best_key = key
         return best_key"""
-    
+
 def best_score(a_dictionary):
     if not a_dictionary:
         return None
@@ -18,7 +18,7 @@ def best_score(a_dictionary):
         score = 0
         best_key = None
         for key in a_dictionary.keys():
-            if score is 0 or a_dictionary[key] > score:
+            if score == 0 or a_dictionary[key] > score:
                 score = a_dictionary[key]
                 best_key = key
         return best_key
